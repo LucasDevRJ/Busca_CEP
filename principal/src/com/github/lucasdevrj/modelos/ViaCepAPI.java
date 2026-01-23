@@ -1,8 +1,10 @@
 package com.github.lucasdevrj.modelos;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class ViaCepAPI {
 
@@ -19,5 +21,13 @@ public class ViaCepAPI {
     private HttpRequest criaRequisicaoHttp() {
         HttpRequest requisicao = HttpRequest.newBuilder().uri(URI.create(url)).build();
         return requisicao;
+    }
+
+    private String respostaDoServidor() throws IOException, InterruptedException {
+        HttpClient cliente = criaInstanciaDoClienteHttp();
+        HttpRequest requisicao = criaRequisicaoHttp();
+        HttpResponse<String> resposta = cliente.send(requisicao, HttpResponse.BodyHandlers.ofString());
+        String corpoDaResposta = resposta.body();
+        return corpoDaResposta;
     }
 }
