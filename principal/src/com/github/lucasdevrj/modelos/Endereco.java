@@ -15,4 +15,13 @@ public class Endereco {
     private String guia;
     private String ddd;
     private String siafi;
+
+    public Endereco(EnderecoViaCep enderecoViaCep) {
+        estado = enderecoViaCep.estado();
+        uf = enderecoViaCep.uf();
+        regiao = enderecoViaCep.regiao();
+        localidade = enderecoViaCep.localidade();
+        bairro = enderecoViaCep.bairro();
+        logradouro = enderecoViaCep.logradouro();
+    }
 }
