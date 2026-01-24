@@ -20,10 +20,14 @@ public class Menu {
         System.out.print("Digite a opção desejada: ");
         int opcaoDesejada = entradaDeDados.nextInt();
 
+        ViaCepAPI viaCepAPI = new ViaCepAPI();
+
         switch (opcaoDesejada) {
             case 1:
-                ViaCepAPI viaCepAPI = new ViaCepAPI();
-                viaCepAPI.consumirApi();
+                viaCepAPI.exibeEndereco();
+                break;
+            case 2:
+                viaCepAPI.exibeEnderecoCompleto();
                 break;
         }
     }

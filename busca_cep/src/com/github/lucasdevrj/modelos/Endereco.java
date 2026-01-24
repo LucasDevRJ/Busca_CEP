@@ -4,7 +4,7 @@ public class Endereco {
 
     private String cep;
     private String logradouro;
-    private String comeplemento;
+    private String complemento;
     private String unidade;
     private String bairro;
     private String localidade;
@@ -17,12 +17,41 @@ public class Endereco {
     private String siafi;
 
     public Endereco(EnderecoViaCep enderecoViaCep) {
-        estado = enderecoViaCep.estado();
-        uf = enderecoViaCep.uf();
-        regiao = enderecoViaCep.regiao();
-        localidade = enderecoViaCep.localidade();
-        bairro = enderecoViaCep.bairro();
+        cep = enderecoViaCep.cep();
         logradouro = enderecoViaCep.logradouro();
+        complemento = enderecoViaCep.complemento();
+        unidade = enderecoViaCep.unidade();
+        bairro = enderecoViaCep.bairro();
+        localidade = enderecoViaCep.localidade();
+        uf = enderecoViaCep.uf();
+        estado = enderecoViaCep.estado();
+        regiao = enderecoViaCep.regiao();
+        ibge = enderecoViaCep.ibge();
+        guia = enderecoViaCep.guia();
+        ddd = enderecoViaCep.ddd();
+        siafi = enderecoViaCep.siafi();
+    }
+
+    public String exibeEnderecoCompleto() {
+        String endereco = """
+                |-------------------** CEP Encontrado **-------------------|
+                CEP: %s
+                Logradouro: %s
+                Complemento: %s
+                Unidade: %s
+                Bairro: %s
+                Localidade: %s
+                UF: %s
+                Estado: %s
+                Região: %s
+                IBGE: %s
+                Guia: %s
+                DDD: %s
+                SIAF: %s
+                |-------------------********************-------------------|
+                """.formatted(cep, localidade, complemento, unidade, bairro, localidade, uf, estado, regiao, ibge,
+                guia, ddd, siafi);
+        return endereco;
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ViaCepAPI {
 
     private String cep;
-    private final String api = "viacep.com.br/ws"; // 22710270/json
+    private final String api = "viacep.com.br/ws";
     private final String formato = "json";
     private String url;
 
@@ -54,14 +54,25 @@ public class ViaCepAPI {
         entradaDeDados.close();
     }
 
-    public void consumirApi() throws IOException, InterruptedException {
+    private String retornaJson() throws IOException, InterruptedException {
         pesquisaCep();
         String jsonRetornado = respostaDoServidor();
+        return jsonRetornado;
+    }
 
+    private EnderecoViaCep serializarEndereco() throws IOException, InterruptedException {
         Gson gson = new Gson();
-        EnderecoViaCep enderecoViaCep = gson.fromJson(jsonRetornado, EnderecoViaCep.class);
-        Endereco endereco = new Endereco(enderecoViaCep);
+        EnderecoViaCep endereco = gson.fromJson(retornaJson(), EnderecoViaCep.class);
+        return endereco;
+    }
 
+    public void exibeEndereco() throws IOException, InterruptedException {
+        Endereco endereco = new Endereco(serializarEndereco());
         System.out.println(endereco);
+    }
+
+    public void exibeEnderecoCompleto() throws IOException, InterruptedException {
+        Endereco endereco = new Endereco(serializarEndereco());
+        System.out.println(endereco.exibeEnderecoCompleto());
     }
 }
