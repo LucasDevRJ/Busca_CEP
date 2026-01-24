@@ -24,4 +24,18 @@ public class Endereco {
         bairro = enderecoViaCep.bairro();
         logradouro = enderecoViaCep.logradouro();
     }
+
+    @Override
+    public String toString() {
+        return """
+                |-------------------** CEP Encontrado **-------------------|
+                Estado: %s
+                UF: %s
+                Região: %s
+                Localidade: %s
+                Bairro: %s
+                Logradouro: %s
+                |-------------------********************-------------------|
+                """.formatted(estado, uf, regiao, localidade, bairro, logradouro);
+    }
 }

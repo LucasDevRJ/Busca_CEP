@@ -1,6 +1,7 @@
 package com.github.lucasdevrj.modelos;
 
 import com.github.lucasdevrj.excecoes.ErroCepInvalidoException;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,7 +15,7 @@ public class ViaCepAPI {
     private String cep;
     private final String api = "viacep.com.br/ws"; // 22710270/json
     private final String formato = "json";
-    private String url = "%s/%s/%s".formatted(api, cep, formato);
+    private String url;
 
     private HttpClient criaInstanciaDoClienteHttp() {
         HttpClient cliente = HttpClient.newHttpClient();
@@ -38,14 +39,29 @@ public class ViaCepAPI {
         Scanner entradaDeDados = new Scanner(System.in);
 
         System.out.print("Digite o CEP desejado: ");
-        String cepDigitado = entradaDeDados.nextLine();
+        cep = entradaDeDados.nextLine();
 
-        if (cepDigitado.length() != 8) {
+        if (cep.length() != 8) {
             throw new ErroCepInvalidoException("CEP inválido! Digite somente 8 números. Exemplo: \"01001000\"");
-        } else if (cepDigitado.matches(".*\\D.*")) {
+        } else if (cep.matches(".*\\D.*")) {
             throw new ErroCepInvalidoException("CEP inválido! Digite somente números. Exemplo: \"01001000\"");
         }
 
-        cep = cepDigitado;
+        url = "https://%s/%s/%s".formatted(api, cep, formato);
+
+        System.out.println(url);
+
+        entradaDeDados.close();
+    }
+
+    public void consumirApi() throws IOException, InterruptedException {
+        pesquisaCep();
+        String jsonRetornado = respostaDoServidor();
+
+        Gson gson = new Gson();
+        EnderecoViaCep enderecoViaCep = gson.fromJson(jsonRetornado, EnderecoViaCep.class);
+        Endereco endereco = new Endereco(enderecoViaCep);
+
+        System.out.println(endereco);
     }
 }
