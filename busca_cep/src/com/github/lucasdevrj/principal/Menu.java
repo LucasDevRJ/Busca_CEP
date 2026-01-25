@@ -16,6 +16,7 @@ public class Menu {
                 1 - Pesquisar CEP
                 2 - Pesquisar CEP com Todas as Informações
                 3 - Listar CEPs Pesquisados
+                4 - Listar CEPs Ordenados
                 """;
                 System.out.println(menu);
 
@@ -37,14 +38,13 @@ public class Menu {
                         viaCepAPI.exibeTodosEnderecosPesquisados();
                         break;
                     case 4:
-                        System.out.println("Programa finalizado.");
-                        entradaDeDados.close();
+                        viaCepAPI.exibeEnderecosOrdenados();
                         break;
                 }
             } catch (InputMismatchException erro) {
                 System.out.println("Erro de caractere(s) inválido(s). Digite somente números");
             }
-        } while (opcaoDesejada != 4);
+        } while (opcaoDesejada != 5);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

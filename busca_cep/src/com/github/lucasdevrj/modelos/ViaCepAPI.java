@@ -9,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class ViaCepAPI {
@@ -104,5 +105,20 @@ public class ViaCepAPI {
         } else {
             System.out.println("Ainda não foi pesquisado nenhum CEP.");
         }
+    }
+
+    public void exibeEnderecosOrdenados() {
+        System.out.println("|-------------------** Lista de CEPs Ordenados **-------------------|");
+        Collections.sort(listaDeEnderecos);
+        for (Endereco endereco : listaDeEnderecos) {
+            System.out.println(endereco);
+        }
+        System.out.println("|-------------------*****************************---------------------|");
+    }
+
+    public void exibeEstatisticas() {
+        int quantidadeDeCepsPesquisados = listaDeEnderecos.size();
+        System.out.println("|-------------------** Estatisticas **-------------------|");
+        System.out.println("Quantidade de CEPs pesquisados: " + quantidadeDeCepsPesquisados);
     }
 }

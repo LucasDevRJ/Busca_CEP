@@ -1,6 +1,6 @@
 package com.github.lucasdevrj.modelos;
 
-public class Endereco {
+public class Endereco implements Comparable<Endereco> {
 
     private String cep;
     private String logradouro;
@@ -70,5 +70,10 @@ public class Endereco {
                 Bairro: %s
                 Logradouro: %s
                 """.formatted(estado, uf, regiao, localidade, bairro, logradouro);
+    }
+
+    @Override
+    public int compareTo(Endereco outroEstado) {
+        return estado.compareTo(outroEstado.estado);
     }
 }
