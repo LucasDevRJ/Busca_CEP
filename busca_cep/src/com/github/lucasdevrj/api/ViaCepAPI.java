@@ -1,6 +1,8 @@
-package com.github.lucasdevrj.modelos;
+package com.github.lucasdevrj.api;
 
 import com.github.lucasdevrj.excecoes.ErroCepInvalidoException;
+import com.github.lucasdevrj.modelos.Endereco;
+import com.github.lucasdevrj.modelos.EnderecoViaCep;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -178,11 +180,16 @@ public class ViaCepAPI {
     }
 
     public void exibeEstatisticas() {
-        System.out.println("|-------------------** Estatisticas **-------------------|");
-        System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
-        System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
-        System.out.println("Estado menos pesquisado: " + retornaEstadoMenosPesquisado());
-        System.out.println("Primeiro CEP pesquisado: " );
-        System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
+        if (listaDeEnderecos.size() > 0) {
+            System.out.println("|-------------------** Estatisticas **-------------------|");
+            System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
+            System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
+            System.out.println("Estado menos pesquisado: " + retornaEstadoMenosPesquisado());
+            System.out.println("Primeiro CEP pesquisado: " );
+            System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
+            System.out.println("|-------------------*******************---------------------|");
+        } else {
+            System.out.println("Ainda não foi pesquisado nenhum CEP.");
+        }
     }
 }

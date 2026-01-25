@@ -1,6 +1,6 @@
 package com.github.lucasdevrj.principal;
 
-import com.github.lucasdevrj.modelos.ViaCepAPI;
+import com.github.lucasdevrj.api.ViaCepAPI;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -17,6 +17,7 @@ public class Menu {
                 2 - Pesquisar CEP com Todas as Informações
                 3 - Listar CEPs Pesquisados
                 4 - Listar CEPs Ordenados
+                5 - Exibir Estatisticas
                 """;
                 System.out.println(menu);
 
