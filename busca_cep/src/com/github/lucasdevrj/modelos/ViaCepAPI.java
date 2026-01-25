@@ -8,9 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 public class ViaCepAPI {
 
@@ -121,24 +119,42 @@ public class ViaCepAPI {
     }
 
     private String retornaEstadoMaisPesquisado() {
-        int quantidadeDeVezesQueOhEstadoFoiPesquisado = 0;
-        String estadoMaisPesquisado = "";
-        if (retornaQuantidadeDeCepsPesquisados() > 1) {
-            for (int i = 1; i < listaDeEnderecos.size(); i++) {
-                Endereco enderecoAnterior = listaDeEnderecos.get(i-1);
-                Endereco enderecoAtual = listaDeEnderecos.get(i);
-                if (enderecoAtual.getEstado().equals(enderecoAnterior.getEstado())) {
-                    quantidadeDeVezesQueOhEstadoFoiPesquisado++;
-                    estadoMaisPesquisado = enderecoAtual.getEstado();
-                }
+        Map<String, Integer> contadorPorEstado = new HashMap<>();
+
+        for (Endereco endereco : listaDeEnderecos) {
+            String estado = endereco.getEstado();
+
+            if (contadorPorEstado.containsKey(estado)) {
+                contadorPorEstado.put(estado, contadorPorEstado.get(estado) + 1);
+            } else {
+                contadorPorEstado.put(estado, 1);
             }
         }
+
+        String estadoMaisPesquisado = null;
+        int maiorQuantidade = 0;
+
+        for (Map.Entry<String, Integer> entry : contadorPorEstado.entrySet()) {
+            if (entry.getValue() > maiorQuantidade) {
+                maiorQuantidade = entry.getValue();
+                estadoMaisPesquisado = entry.getKey();
+            }
+        }
+
         return estadoMaisPesquisado;
+    }
+
+    private String retornaUltimoCepPesquisado() {
+        int indiceDoUltimoCepPesquisado = retornaQuantidadeDeCepsPesquisados() - 1;
+        Endereco endereco = listaDeEnderecos.get(indiceDoUltimoCepPesquisado);
+        String cep = endereco.getCep();
+        return cep;
     }
 
     public void exibeEstatisticas() {
         System.out.println("|-------------------** Estatisticas **-------------------|");
         System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
         System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
+        System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
     }
 }
