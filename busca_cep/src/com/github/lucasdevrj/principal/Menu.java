@@ -40,11 +40,14 @@ public class Menu {
                     case 4:
                         viaCepAPI.exibeEnderecosOrdenados();
                         break;
+                    case 5:
+                        viaCepAPI.exibeEstatisticas();
+                        break;
                 }
             } catch (InputMismatchException erro) {
                 System.out.println("Erro de caractere(s) inválido(s). Digite somente números");
             }
-        } while (opcaoDesejada != 5);
+        } while (opcaoDesejada != 6);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

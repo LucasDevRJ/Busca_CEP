@@ -116,9 +116,29 @@ public class ViaCepAPI {
         System.out.println("|-------------------*****************************---------------------|");
     }
 
+    private int retornaQuantidadeDeCepsPesquisados() {
+        return listaDeEnderecos.size();
+    }
+
+    private String retornaEstadoMaisPesquisado() {
+        int quantidadeDeVezesQueOhEstadoFoiPesquisado = 0;
+        String estadoMaisPesquisado = "";
+        if (retornaQuantidadeDeCepsPesquisados() > 1) {
+            for (int i = 1; i < listaDeEnderecos.size(); i++) {
+                Endereco enderecoAnterior = listaDeEnderecos.get(i-1);
+                Endereco enderecoAtual = listaDeEnderecos.get(i);
+                if (enderecoAtual.getEstado().equals(enderecoAnterior.getEstado())) {
+                    quantidadeDeVezesQueOhEstadoFoiPesquisado++;
+                    estadoMaisPesquisado = enderecoAtual.getEstado();
+                }
+            }
+        }
+        return estadoMaisPesquisado;
+    }
+
     public void exibeEstatisticas() {
-        int quantidadeDeCepsPesquisados = listaDeEnderecos.size();
         System.out.println("|-------------------** Estatisticas **-------------------|");
-        System.out.println("Quantidade de CEPs pesquisados: " + quantidadeDeCepsPesquisados);
+        System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
+        System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
     }
 }

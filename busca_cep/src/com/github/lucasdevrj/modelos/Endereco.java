@@ -36,6 +36,10 @@ public class Endereco implements Comparable<Endereco> {
         }
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
     public String retornaInformacoesDoCep() {
         return """
                 |-------------------** CEP Encontrado **-------------------|
