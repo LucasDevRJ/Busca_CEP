@@ -56,8 +56,15 @@ public class ViaCepAPI {
     }
 
     private String retornaJson() throws IOException, InterruptedException {
-        pesquisaCep();
-        String jsonRetornado = respostaDoServidor();
+        String jsonRetornado = "";
+        try {
+            pesquisaCep();
+            jsonRetornado = respostaDoServidor();
+        } catch (ErroCepInvalidoException erro) {
+            System.out.println("Erro: " + erro.getMessage());
+        } catch (NullPointerException erro) {
+            System.out.println("Erro: " + erro.getMessage());
+        }
         return jsonRetornado;
     }
 
@@ -76,13 +83,14 @@ public class ViaCepAPI {
     public void exibeEnderecoCompleto() throws IOException, InterruptedException {
         Endereco endereco = new Endereco(serializarEndereco());
         listaDeEnderecos.add(endereco);
-        System.out.println(endereco.exibeEnderecoCompleto());
+        System.out.println(endereco.retornaTodasInformacoesDoCep());
     }
 
     public void exibeTodosEnderecosPesquisados() {
-        System.out.println("CEPS pesquisados");
+        System.out.println("|-------------------** Lista de CEPs Encontrados **-------------------|");
         for (Endereco endereco : listaDeEnderecos) {
             System.out.println(endereco);
         }
+        System.out.println("|-------------------*****************************---------------------|");
     }
 }

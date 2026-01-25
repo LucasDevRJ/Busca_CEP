@@ -17,19 +17,23 @@ public class Endereco {
     private String siafi;
 
     public Endereco(EnderecoViaCep enderecoViaCep) {
-        cep = enderecoViaCep.cep();
-        logradouro = enderecoViaCep.logradouro();
-        complemento = enderecoViaCep.complemento();
-        unidade = enderecoViaCep.unidade();
-        bairro = enderecoViaCep.bairro();
-        localidade = enderecoViaCep.localidade();
-        uf = enderecoViaCep.uf();
-        estado = enderecoViaCep.estado();
-        regiao = enderecoViaCep.regiao();
-        ibge = enderecoViaCep.ibge();
-        guia = enderecoViaCep.guia();
-        ddd = enderecoViaCep.ddd();
-        siafi = enderecoViaCep.siafi();
+        try {
+            cep = enderecoViaCep.cep();
+            logradouro = enderecoViaCep.logradouro();
+            complemento = enderecoViaCep.complemento();
+            unidade = enderecoViaCep.unidade();
+            bairro = enderecoViaCep.bairro();
+            localidade = enderecoViaCep.localidade();
+            uf = enderecoViaCep.uf();
+            estado = enderecoViaCep.estado();
+            regiao = enderecoViaCep.regiao();
+            ibge = enderecoViaCep.ibge();
+            guia = enderecoViaCep.guia();
+            ddd = enderecoViaCep.ddd();
+            siafi = enderecoViaCep.siafi();
+        } catch (NullPointerException erro) {
+            System.out.println("Não foi possível instanciar o Endereço porque o CEP é nulo.");
+        }
     }
 
     public String retornaInformacoesDoCep() {
@@ -40,7 +44,7 @@ public class Endereco {
                 """.formatted(toString());
     }
 
-    public String exibeEnderecoCompleto() {
+    public String retornaTodasInformacoesDoCep() {
         String endereco = """
                 |-------------------** CEP Encontrado **-------------------|
                 CEP: %s
