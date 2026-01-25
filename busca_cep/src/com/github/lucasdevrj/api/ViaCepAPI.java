@@ -179,12 +179,43 @@ public class ViaCepAPI {
         return cep;
     }
 
+    private List<String> retornaTop3EstadosMaisPesquisados() {
+
+        // 1) Contar quantas vezes cada estado aparece
+        Map<String, Integer> contadorPorEstado = new HashMap<>();
+
+        for (Endereco endereco : listaDeEnderecos) {
+            String estado = endereco.getEstado();
+            contadorPorEstado.put(estado, contadorPorEstado.getOrDefault(estado, 0) + 1);
+        }
+
+        // 2) Transformar o Map em uma lista de entradas
+        List<Map.Entry<String, Integer>> listaOrdenavel =
+                new ArrayList<>(contadorPorEstado.entrySet());
+
+        // 3) Ordenar pela quantidade (do maior para o menor)
+        listaOrdenavel.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
+
+        // 4) Pegar os 3 primeiros (ou menos, se nao tiver 3)
+        List<String> topEstados = new ArrayList<>();
+        int limite = Math.min(3, listaOrdenavel.size());
+
+        for (int i = 0; i < limite; i++) {
+            String formatacao = "%dª".formatted(i+1);
+            topEstados.add(formatacao + listaOrdenavel.get(i).getKey());
+        }
+
+        return topEstados;
+    }
+
+
     public void exibeEstatisticas() {
         if (listaDeEnderecos.size() > 0) {
             System.out.println("|-------------------** Estatisticas **-------------------|");
             System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
             System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
             System.out.println("Estado menos pesquisado: " + retornaEstadoMenosPesquisado());
+            System.out.println("Top 3 Estados mais pesquisados: " + retornaTop3EstadosMaisPesquisados());
             System.out.println("Primeiro CEP pesquisado: " );
             System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
             System.out.println("|-------------------*******************---------------------|");
