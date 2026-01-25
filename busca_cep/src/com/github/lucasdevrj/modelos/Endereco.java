@@ -32,39 +32,39 @@ public class Endereco {
         siafi = enderecoViaCep.siafi();
     }
 
+    public String retornaInformacoesDoCep() {
+        return """
+                |-------------------** CEP Encontrado **-------------------|
+                %s
+                |-------------------********************-------------------|
+                """.formatted(toString());
+    }
+
     public String exibeEnderecoCompleto() {
         String endereco = """
                 |-------------------** CEP Encontrado **-------------------|
                 CEP: %s
-                Logradouro: %s
                 Complemento: %s
                 Unidade: %s
-                Bairro: %s
-                Localidade: %s
-                UF: %s
-                Estado: %s
-                Região: %s
                 IBGE: %s
                 Guia: %s
                 DDD: %s
                 SIAF: %s
+                %s
                 |-------------------********************-------------------|
-                """.formatted(cep, localidade, complemento, unidade, bairro, localidade, uf, estado, regiao, ibge,
-                guia, ddd, siafi);
+                """.formatted(cep, complemento, unidade, ibge, guia, ddd, siafi, toString());
         return endereco;
     }
 
     @Override
     public String toString() {
         return """
-                |-------------------** CEP Encontrado **-------------------|
                 Estado: %s
                 UF: %s
                 Região: %s
                 Localidade: %s
                 Bairro: %s
                 Logradouro: %s
-                |-------------------********************-------------------|
                 """.formatted(estado, uf, regiao, localidade, bairro, logradouro);
     }
 }

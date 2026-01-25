@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ViaCepAPI {
@@ -16,6 +17,7 @@ public class ViaCepAPI {
     private final String api = "viacep.com.br/ws";
     private final String formato = "json";
     private String url;
+    private static ArrayList<Endereco> listaDeEnderecos = new ArrayList<>();
 
     private HttpClient criaInstanciaDoClienteHttp() {
         HttpClient cliente = HttpClient.newHttpClient();
@@ -51,7 +53,6 @@ public class ViaCepAPI {
 
         System.out.println(url);
 
-        entradaDeDados.close();
     }
 
     private String retornaJson() throws IOException, InterruptedException {
@@ -68,11 +69,20 @@ public class ViaCepAPI {
 
     public void exibeEndereco() throws IOException, InterruptedException {
         Endereco endereco = new Endereco(serializarEndereco());
-        System.out.println(endereco);
+        listaDeEnderecos.add(endereco);
+        System.out.println(endereco.retornaInformacoesDoCep());
     }
 
     public void exibeEnderecoCompleto() throws IOException, InterruptedException {
         Endereco endereco = new Endereco(serializarEndereco());
+        listaDeEnderecos.add(endereco);
         System.out.println(endereco.exibeEnderecoCompleto());
+    }
+
+    public void exibeTodosEnderecosPesquisados() {
+        System.out.println("CEPS pesquisados");
+        for (Endereco endereco : listaDeEnderecos) {
+            System.out.println(endereco);
+        }
     }
 }

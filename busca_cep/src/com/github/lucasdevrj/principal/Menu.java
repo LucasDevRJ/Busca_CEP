@@ -13,23 +13,32 @@ public class Menu {
                 2 - Pesquisar CEP com Todas as Informações
                 3 - Listar CEPs Pesquisados
                 """;
-        System.out.println(menu);
 
         Scanner entradaDeDados = new Scanner(System.in);
+        int opcaoDesejada;
+        do {
+            System.out.println(menu);
+            System.out.print("Digite a opção desejada: ");
+            opcaoDesejada = entradaDeDados.nextInt();
+            ViaCepAPI viaCepAPI = new ViaCepAPI();
 
-        System.out.print("Digite a opção desejada: ");
-        int opcaoDesejada = entradaDeDados.nextInt();
+            switch (opcaoDesejada) {
+                case 1:
+                    viaCepAPI.exibeEndereco();
+                    break;
+                case 2:
+                    viaCepAPI.exibeEnderecoCompleto();
+                    break;
+                case 3:
+                    viaCepAPI.exibeTodosEnderecosPesquisados();
+                    break;
+                case 4:
+                    System.out.println("Programa finalizado.");
+                    //entradaDeDados.close();
+                    break;
+            }
+        } while (opcaoDesejada != 4);
 
-        ViaCepAPI viaCepAPI = new ViaCepAPI();
-
-        switch (opcaoDesejada) {
-            case 1:
-                viaCepAPI.exibeEndereco();
-                break;
-            case 2:
-                viaCepAPI.exibeEnderecoCompleto();
-                break;
-        }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
