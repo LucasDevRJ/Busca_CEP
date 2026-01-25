@@ -32,7 +32,7 @@ public class Endereco {
             ddd = enderecoViaCep.ddd();
             siafi = enderecoViaCep.siafi();
         } catch (NullPointerException erro) {
-            System.out.println("Não foi possível instanciar o Endereço porque o CEP é nulo.");
+            throw new NullPointerException("Não foi possível instanciar o Endereço, pois ele é nulo ou inexistente.");
         }
     }
 

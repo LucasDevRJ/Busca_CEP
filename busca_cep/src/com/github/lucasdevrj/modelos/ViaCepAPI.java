@@ -56,7 +56,7 @@ public class ViaCepAPI {
     }
 
     private String retornaJson() throws IOException, InterruptedException {
-        String jsonRetornado = "";
+        String jsonRetornado = null;
         try {
             pesquisaCep();
             jsonRetornado = respostaDoServidor();
@@ -75,22 +75,34 @@ public class ViaCepAPI {
     }
 
     public void exibeEndereco() throws IOException, InterruptedException {
-        Endereco endereco = new Endereco(serializarEndereco());
-        listaDeEnderecos.add(endereco);
-        System.out.println(endereco.retornaInformacoesDoCep());
+        try {
+            Endereco endereco = new Endereco(serializarEndereco());
+            listaDeEnderecos.add(endereco);
+            System.out.println(endereco.retornaInformacoesDoCep());
+        } catch (NullPointerException erro) {
+            System.out.println("Erro: " + erro.getMessage());
+        }
     }
 
     public void exibeEnderecoCompleto() throws IOException, InterruptedException {
-        Endereco endereco = new Endereco(serializarEndereco());
-        listaDeEnderecos.add(endereco);
-        System.out.println(endereco.retornaTodasInformacoesDoCep());
+        try {
+            Endereco endereco = new Endereco(serializarEndereco());
+            listaDeEnderecos.add(endereco);
+            System.out.println(endereco.retornaTodasInformacoesDoCep());
+        } catch (NullPointerException erro) {
+            System.out.println("Erro: " + erro.getMessage());
+        }
     }
 
     public void exibeTodosEnderecosPesquisados() {
-        System.out.println("|-------------------** Lista de CEPs Encontrados **-------------------|");
-        for (Endereco endereco : listaDeEnderecos) {
-            System.out.println(endereco);
+        if (listaDeEnderecos.size() > 0) {
+            System.out.println("|-------------------** Lista de CEPs Encontrados **-------------------|");
+            for (Endereco endereco : listaDeEnderecos) {
+                System.out.println(endereco);
+            }
+            System.out.println("|-------------------*****************************---------------------|");
+        } else {
+            System.out.println("Ainda não foi pesquisado nenhum CEP.");
         }
-        System.out.println("|-------------------*****************************---------------------|");
     }
 }
