@@ -118,6 +118,32 @@ public class ViaCepAPI {
         return listaDeEnderecos.size();
     }
 
+    private String retornaEstadoMenosPesquisado() {
+        Map<String, Integer> contadorPorEstado = new HashMap<>();
+
+        for (Endereco endereco : listaDeEnderecos) {
+            String estado = endereco.getEstado();
+
+            if (contadorPorEstado.containsKey(estado)) {
+                contadorPorEstado.put(estado, contadorPorEstado.get(estado) + 1);
+            } else {
+                contadorPorEstado.put(estado, 1);
+            }
+        }
+
+        String estadoMenosPesquisado = null;
+        int menorQuantidade = listaDeEnderecos.size() - 1;
+
+        for (Map.Entry<String, Integer> entry : contadorPorEstado.entrySet()) {
+            if (entry.getValue() < menorQuantidade) {
+                menorQuantidade = entry.getValue();
+                estadoMenosPesquisado = entry.getKey();
+            }
+        }
+
+        return estadoMenosPesquisado;
+    }
+
     private String retornaEstadoMaisPesquisado() {
         Map<String, Integer> contadorPorEstado = new HashMap<>();
 
@@ -155,6 +181,8 @@ public class ViaCepAPI {
         System.out.println("|-------------------** Estatisticas **-------------------|");
         System.out.println("Quantidade de CEPs pesquisados: " + retornaQuantidadeDeCepsPesquisados());
         System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
+        System.out.println("Estado menos pesquisado: " + retornaEstadoMenosPesquisado());
+        System.out.println("Primeiro CEP pesquisado: " );
         System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
     }
 }
