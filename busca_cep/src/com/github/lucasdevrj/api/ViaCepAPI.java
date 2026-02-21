@@ -5,8 +5,7 @@ import com.github.lucasdevrj.modelos.Endereco;
 import com.github.lucasdevrj.modelos.EnderecoViaCep;
 import com.google.gson.Gson;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -20,6 +19,7 @@ public class ViaCepAPI {
     private final String formato = "json";
     private String url;
     private static ArrayList<Endereco> listaDeEnderecos = new ArrayList<>();
+    private final String nomeDoArquivo = "enderecos.txt";
 
     private HttpClient criaInstanciaDoClienteHttp() {
         HttpClient cliente = HttpClient.newHttpClient();
@@ -55,9 +55,9 @@ public class ViaCepAPI {
     }
 
     private void escreveEnderecoNoArquivo(String jsonRetornado) throws IOException {
-        FileWriter arquivo = new FileWriter("enderecos.txt");
-        arquivo.write(jsonRetornado);
-        arquivo.close();
+        FileWriter escritor = new FileWriter(nomeDoArquivo);
+        escritor.write(jsonRetornado);
+        escritor.close();
     }
 
     private String retornaJson() throws IOException, InterruptedException {
