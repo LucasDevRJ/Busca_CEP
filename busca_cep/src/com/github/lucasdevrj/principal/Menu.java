@@ -18,6 +18,7 @@ public class Menu {
                 3 - Listar CEPs Pesquisados
                 4 - Listar CEPs Ordenados
                 5 - Exibir Estatisticas
+                6 - Sair
                 """;
                 System.out.println(menu);
 
@@ -43,6 +44,9 @@ public class Menu {
                         break;
                     case 5:
                         viaCepAPI.exibeEstatisticas();
+                        break;
+                    case 6:
+                        viaCepAPI.finalizar();
                         break;
                 }
             } catch (InputMismatchException erro) {

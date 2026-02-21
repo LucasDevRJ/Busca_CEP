@@ -120,7 +120,7 @@ public class ViaCepAPI {
         return listaDeEnderecos.size();
     }
 
-    private String retornaEstadoMenosPesquisado() {
+    private Map<String, Integer> retornaContadorDeEstado() {
         Map<String, Integer> contadorPorEstado = new HashMap<>();
 
         for (Endereco endereco : listaDeEnderecos) {
@@ -132,7 +132,11 @@ public class ViaCepAPI {
                 contadorPorEstado.put(estado, 1);
             }
         }
+        return contadorPorEstado;
+    }
 
+    private String retornaEstadoMenosPesquisado() {
+        Map<String, Integer> contadorPorEstado = retornaContadorDeEstado();
         String estadoMenosPesquisado = null;
         int menorQuantidade = listaDeEnderecos.size() - 1;
 
@@ -147,18 +151,7 @@ public class ViaCepAPI {
     }
 
     private String retornaEstadoMaisPesquisado() {
-        Map<String, Integer> contadorPorEstado = new HashMap<>();
-
-        for (Endereco endereco : listaDeEnderecos) {
-            String estado = endereco.getEstado();
-
-            if (contadorPorEstado.containsKey(estado)) {
-                contadorPorEstado.put(estado, contadorPorEstado.get(estado) + 1);
-            } else {
-                contadorPorEstado.put(estado, 1);
-            }
-        }
-
+        Map<String, Integer> contadorPorEstado = retornaContadorDeEstado();
         String estadoMaisPesquisado = null;
         int maiorQuantidade = 0;
 
@@ -177,6 +170,12 @@ public class ViaCepAPI {
         Endereco endereco = listaDeEnderecos.get(indiceDoUltimoCepPesquisado);
         String cep = endereco.getCep();
         return cep;
+    }
+
+    private String retornaPrimeiroCepPesquisado() {
+        Endereco enderecoPrimeiroCepPesquisado = listaDeEnderecos.get(0);
+        String primeiroCepPesquisado = enderecoPrimeiroCepPesquisado.getCep();
+        return primeiroCepPesquisado;
     }
 
     private List<String> retornaTop3EstadosMaisPesquisados() {
@@ -208,7 +207,6 @@ public class ViaCepAPI {
         return topEstados;
     }
 
-
     public void exibeEstatisticas() {
         if (listaDeEnderecos.size() > 0) {
             System.out.println("|-------------------** Estatisticas **-------------------|");
@@ -216,11 +214,15 @@ public class ViaCepAPI {
             System.out.println("Estado mais pesquisado: " + retornaEstadoMaisPesquisado());
             System.out.println("Estado menos pesquisado: " + retornaEstadoMenosPesquisado());
             System.out.println("Top 3 Estados mais pesquisados: " + retornaTop3EstadosMaisPesquisados());
-            System.out.println("Primeiro CEP pesquisado: " );
+            System.out.println("Primeiro CEP pesquisado: " + retornaPrimeiroCepPesquisado());
             System.out.println("Último CEP pesquisado: " + retornaUltimoCepPesquisado());
             System.out.println("|-------------------*******************---------------------|");
         } else {
             System.out.println("Ainda não foi pesquisado nenhum CEP.");
         }
+    }
+
+    public void finalizar() {
+        System.out.println("Programa finalizado.");
     }
 }
