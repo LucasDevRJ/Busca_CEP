@@ -5,6 +5,7 @@ import com.github.lucasdevrj.modelos.Endereco;
 import com.github.lucasdevrj.modelos.EnderecoViaCep;
 import com.google.gson.Gson;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -51,9 +52,12 @@ public class ViaCepAPI {
         }
 
         url = "https://%s/%s/%s".formatted(api, cep, formato);
+    }
 
-        System.out.println(url);
-
+    private void escreveEnderecoNoArquivo(String jsonRetornado) throws IOException {
+        FileWriter arquivo = new FileWriter("enderecos.txt");
+        arquivo.write(jsonRetornado);
+        arquivo.close();
     }
 
     private String retornaJson() throws IOException, InterruptedException {
@@ -61,6 +65,7 @@ public class ViaCepAPI {
         try {
             pesquisaCep();
             jsonRetornado = respostaDoServidor();
+            escreveEnderecoNoArquivo(jsonRetornado);
         } catch (ErroCepInvalidoException erro) {
             System.out.println("Erro: " + erro.getMessage());
         } catch (NullPointerException erro) {
