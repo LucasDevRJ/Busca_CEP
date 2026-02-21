@@ -17,7 +17,13 @@ Uma aplicação desenvolvida em Java que consome uma API de CEP. Logo, essa apli
 - `Funcionalidade 4`: Listar CEPs ordenados;
 - `Funcionalidade 5`: Exibir Estatísticas;
 
-## ✔️ Técnicas e tecnologias utilizadas
+# :file_folder: Acesso ao projeto
+Baixe o projeto clicando aqui
+Coloque o projeto em uma IDE que utilize a linguagem Java
+Coloque o projeto baixado na IDE
+Execute!
+
+## :heavy_check_mark: Técnicas e tecnologias utilizadas
 - ``Java``
 
 # Autor
